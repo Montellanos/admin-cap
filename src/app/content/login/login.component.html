@@ -1,0 +1,34 @@
+<section>
+    <form [formGroup]="login_form" novalidate (ngSubmit)="login(login_form.value, login_form.valid)">
+        <div class="container">
+            <div class="field">
+                <p class="control has-icons-left has-icons-right">
+                    <input class="input" type="email" placeholder="Correo electrónico" #email formControlName="email">
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-envelope"></i>
+                    </span>
+                </p>
+            </div>
+            <div class="field">
+                <p class="control has-icons-left">
+                    <input class="input" type="password" placeholder="Contraseña" #password formControlName="password">
+                    <span class="icon is-small is-left">
+                      <i class="fa fa-lock"></i>
+                    </span>
+                </p>
+            </div>
+            <div>
+                <p>
+                    <strong>{{error_message}}</strong>
+                </p>
+            </div>
+            <div class="field">
+                <p class="control">
+                    <button type="submit" class="button is-primary " [disabled]="!login_form.valid" [ngClass]="{ 'is-loading' : loading }">
+                    Enviar
+                  </button>
+                </p>
+            </div>
+        </div>
+    </form>
+</section>

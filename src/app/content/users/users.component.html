@@ -1,0 +1,7 @@
+<a routerLink="./add" *ngIf="usersService.canCreate">Agregar</a>
+
+
+<p>Create: {{usersService.canCreate}} </p>
+<p>Update: {{usersService.canUpdate}}</p>
+<p>Read: {{usersService.canRead}}</p>
+<p>Delete : {{usersService.canDelete}}</p>

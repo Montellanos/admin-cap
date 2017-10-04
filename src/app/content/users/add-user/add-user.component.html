@@ -1,0 +1,125 @@
+<section>
+    <form [formGroup]="add_user_form" novalidate (ngSubmit)="addUser(add_user_form.value, add_user_form.valid)">
+        <div class="container">
+            <div class="field">
+                <label class="label">Nombre</label>
+                <div class="control has-icons-right">
+                    <input class="input" type="text" formControlName="name" #name name="name" [ngClass]="{'is-danger' : (add_user_form.controls.name.invalid && submitted)}">
+                    <span class="icon is-small is-right">
+                        <i class="fa fa-close" [ngClass]="{'fa-close' : (add_user_form.controls.name.invalid && submitted)}"></i>
+                    </span>
+                </div>
+                <span [hidden]="(!submitted || (submitted && add_user_form.controls.name.valid))">
+                    <p class="help is-danger" *ngIf="add_user_form.controls.name.errors?.required" >
+                      Nombre requerido
+                    </p>
+                    <p class="help is-danger" *ngIf="add_user_form.controls.name.errors?.minlength">
+                      Minimo 2 caracteres
+                    </p>
+                    <p class="help is-danger" *ngIf="add_user_form.controls.name.errors?.maxlength">
+                      Maximo 30 caracteres
+                    </p>
+                    <p class="help is-danger" *ngIf="add_user_form.controls.name.errors?.pattern">
+                      Solo caracteres alfabeticos
+                    </p>
+                </span>
+            </div>
+            <div class="field">
+                <label class="label">Apellidos</label>
+                <div class="control has-icons-right">
+                    <input class="input" type="text" formControlName="lastname" #lastname name="lastname" [ngClass]="{'is-danger' : (add_user_form.controls.lastname.invalid && submitted)}">
+                    <span class="icon is-small is-right">
+                        <i class="fa fa-close" [ngClass]="{'fa-close' : (add_user_form.controls.lastname.invalid && submitted)}"></i>
+                    </span>
+                </div>
+                <span [hidden]="(!submitted || (submitted && add_user_form.controls.lastname.valid))">
+                    <p class="help is-danger" *ngIf="add_user_form.controls.lastname.errors?.required" >
+                      Apellidos requeridos
+                    </p>
+                    <p class="help is-danger" *ngIf="add_user_form.controls.lastname.errors?.minlength">
+                      Minimo 2 caracteres
+                    </p>
+                    <p class="help is-danger" *ngIf="add_user_form.controls.lastname.errors?.maxlength">
+                      Maximo 60 caracteres
+                    </p>
+                    <p class="help is-danger" *ngIf="add_user_form.controls.lastname.errors?.pattern">
+                      Solo caracteres alfabeticos
+                    </p>
+                </span>
+            </div>
+            <div class="field">
+                <label class="label">Correo electronico</label>
+                <div class="control has-icons-right">
+                    <input class="input" type="email" formControlName="email" #email name="email" [ngClass]="{'is-danger' : (add_user_form.controls.email.invalid && submitted)}">
+                    <span class="icon is-small is-right">
+                        <i class="fa fa-close" [ngClass]="{'fa-close' : (add_user_form.controls.email.invalid && submitted)}"></i>
+                    </span>
+                </div>
+                <span [hidden]="(!submitted || (submitted && add_user_form.controls.email.valid))">
+                    <p class="help is-danger" *ngIf="add_user_form.controls.email.errors?.required" >
+                      Correo electronico requerido
+                    </p>
+                    <p class="help is-danger" *ngIf="add_user_form.controls.email.errors?.minlength">
+                      Minimo 2 caracteres
+                    </p>
+                    <p class="help is-danger" *ngIf="add_user_form.controls.email.errors?.maxlength">
+                      Maximo 60 caracteres
+                    </p>
+                    <p class="help is-danger" *ngIf="add_user_form.controls.email.errors?.pattern">
+                      Correo invalido
+                    </p>
+                </span>
+            </div>
+            <div class="field">
+                <label class="label">Telefono celular</label>
+                <div class="control has-icons-right">
+                    <input class="input" type="text" formControlName="cellphone" #cellphone name="cellphone" [ngClass]="{'is-danger' : (add_user_form.controls.cellphone.invalid && submitted)}">
+                    <span class="icon is-small is-right">
+                        <i class="fa fa-close" [ngClass]="{'fa-close' : (add_user_form.controls.cellphone.invalid && submitted)}"></i>
+                    </span>
+                </div>
+                <span [hidden]="(!submitted || (submitted && add_user_form.controls.cellphone.valid))">
+                    <p class="help is-danger" *ngIf="add_user_form.controls.cellphone.errors?.required" >
+                      Telefono celular requerido
+                    </p>
+                    <p class="help is-danger" *ngIf="add_user_form.controls.cellphone.errors?.minlength">
+                      Minimo 6 numeros
+                    </p>
+                    <p class="help is-danger" *ngIf="add_user_form.controls.cellphone.errors?.maxlength">
+                      Maximo 60 numeros
+                    </p>
+                    <p class="help is-danger" *ngIf="add_user_form.controls.cellphone.errors?.pattern">
+                      Solo numeros
+                    </p>
+                </span>
+            </div>
+            <div class="field">
+                <label class="label">Rol</label>
+                <div class="control" [ngClass]="{'has-icons-left' : (add_user_form.controls.roles.invalid && submitted)}">
+                    <div class="select" [ngClass]="{'is-danger' : (add_user_form.controls.roles.invalid && submitted)}">
+                        <select formControlName="roles" #roles name="roles">
+                          <option *ngFor="let rol of available_roles" value="{{rol}}">{{rol | roleformat}}</option>
+                        </select>
+                    </div>
+                    <div class="icon is-small is-left">
+                        <i class="fa fa-close" [ngClass]="{'fa-close' : (add_user_form.controls.roles.invalid && submitted)}"></i>
+                    </div>
+                    <span [hidden]="(!submitted || (submitted && add_user_form.controls.roles.valid))">
+                        <p class="help is-danger" *ngIf="add_user_form.controls.roles.errors?.required" >
+                          Debe seleccionar un rol
+                        </p>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <strong>{{error_message}}</strong>
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-primary" [ngClass]="{ 'is-loading' : loading }">Guardar</button>
+            </div>
+            <div class="control">
+                <button class="button is-link" routerLink="/users">Cancelar</button>
+            </div>
+        </div>
+    </form>
+</section>
