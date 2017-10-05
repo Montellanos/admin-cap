@@ -22,7 +22,9 @@ import { RoleformatPipe } from './series/pipes/roleformat.pipe';
 import { EditorGuard } from './series/guards/editor.guard';
 import { AuthService } from './series/services/auth.service';
 import { AdminGuard } from './series/guards/admin.guard';
+import { RolenameformatPipe } from './series/pipes/rolenameformat.pipe';
 
+import { EditUserComponent } from './content/users/edit-user/edit-user.component';
 
 const environment = {
   production: false,
@@ -47,7 +49,9 @@ const environment = {
     UsersComponent,
     AddUserComponent,
     NotfoundComponent,
-    RoleformatPipe
+    RoleformatPipe,
+    RolenameformatPipe,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,

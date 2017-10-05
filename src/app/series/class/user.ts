@@ -8,17 +8,20 @@ export class User {
   date: any;
   state: boolean;
 
-  constructor(authData) {
-    this.uid = authData.uid;
-    this.displayName = authData.displayName;
-    this.email = authData.email;
-    this.photoURL = authData.photoURL;
-    this.phoneNumber = authData.phoneNumber;
-    this.roles = { editor: true };
-    this.date.created_at = (new Date()).getTime();
-    this.date.updated_at = (new Date()).getTime();
+  constructor(newUser) {
+    this.displayName = newUser.name;
+    this.email = newUser.email;
+    this.phoneNumber = newUser.cellphone;
+    this.photoURL = '';
+    this.roles = {}
+    this.roles[newUser.roles] = true;
+    this.date = {};
+    this.date['created_at'] = (new Date()).getTime();
+    this.date['updated_at'] = (new Date()).getTime();
     this.state = true;
   }
+
+
 
 
 }

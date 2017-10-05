@@ -1,3 +1,4 @@
+import { EditUserComponent } from './content/users/edit-user/edit-user.component';
 import { AdminGuard } from './series/guards/admin.guard';
 import { EditorGuard } from './series/guards/editor.guard';
 import { NotfoundComponent } from './content/notfound/notfound.component';
@@ -34,6 +35,11 @@ const routes: Routes = [
     path : 'users/add',
     component : AddUserComponent,
     canActivate : [AuthGuard]
+  },
+  {
+    path : 'users/edit/:$key',
+    component: EditUserComponent,
+    canActivate : [AuthGuard ]
   },
   {
     path : '**',

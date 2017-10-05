@@ -1,27 +1,39 @@
+import { AngularFireDatabase } from 'angularfire2/database';
 import { User } from './../../../series/class/user';
 import { UsersService } from './../../../series/services/users.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
-  selector: 'app-add-user',
-  templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.css']
+  selector: 'app-edit-user',
+  templateUrl: './edit-user.component.html',
+  styleUrls: ['./edit-user.component.css']
 })
-export class AddUserComponent implements OnInit {
-  add_user_form: FormGroup;
+export class EditUserComponent implements OnInit {
+  update_user_form: FormGroup;
+  loading_page = false;
   loading = false;
   error_message: string;
   available_roles: Array<string>;
   submitted = false;
+  updateUser :User;
 
-  constructor(private formBuild: FormBuilder, private userService: UsersService, private router: Router) {
-    this.available_roles = userService.getRoles();
+  constructor(private formBuild: FormBuilder, private userService: UsersService, private route: ActivatedRoute, private db : AngularFireDatabase) {
+    let key : string;
+    route.params.forEach(param=>{
+      key = param['$key']
+    });
+    this.db.object('users/'+ key).subscribe(res=>{
+      this.updateUser = res;
+      this.loading_page = true;
+    });
   }
 
   ngOnInit() {
-    this.add_user_form = this.formBuild.group({
+
+    this.update_user_form = this.formBuild.group({
       name: ['', [
         Validators.required,
         Validators.minLength(2),
@@ -43,23 +55,7 @@ export class AddUserComponent implements OnInit {
         Validators.compose([Validators.required])
       ]]
     });
-  }
 
-
-  addUser(newUser: User, isValid: boolean): void{
-
-    this.submitted = true;
-    if(isValid){
-      this.loading = true;
-      const us = new User(newUser);
-      this.userService.addUser(us)
-      .subscribe(res=>{
-          this.loading= false;
-          if (res !== true) {
-            this.error_message = 'Algo salio mal, re intente';
-          }
-      });
-    }
   }
 
 }

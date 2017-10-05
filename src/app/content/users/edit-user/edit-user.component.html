@@ -1,10 +1,10 @@
-<section>
+<section *ngIf="loading_page">
     <form [formGroup]="add_user_form" novalidate (ngSubmit)="addUser(add_user_form.value, add_user_form.valid)">
         <div class="container">
             <div class="field">
                 <label class="label">Nombre</label>
                 <div class="control has-icons-right">
-                    <input class="input" type="text" formControlName="name" #name name="name" [ngClass]="{'is-danger' : (add_user_form.controls.name.invalid && submitted)}">
+                    <input class="input" type="text" formControlName="name" #name name="name" [ngClass]="{'is-danger' : (add_user_form.controls.name.invalid && submitted)}" value="{{updateUser?.displayName}}">
                     <span class="icon is-small is-right">
                         <i class="fa fa-close" [ngClass]="{'fa-close' : (add_user_form.controls.name.invalid && submitted)}"></i>
                     </span>
@@ -28,7 +28,7 @@
             <div class="field">
                 <label class="label">Correo electronico</label>
                 <div class="control has-icons-right">
-                    <input class="input" type="email" formControlName="email" #email name="email" [ngClass]="{'is-danger' : (add_user_form.controls.email.invalid && submitted)}">
+                    <input class="input" type="email" formControlName="email" #email name="email" [ngClass]="{'is-danger' : (add_user_form.controls.email.invalid && submitted)}" value="{{updateUser?.email}}">
                     <span class="icon is-small is-right">
                         <i class="fa fa-close" [ngClass]="{'fa-close' : (add_user_form.controls.email.invalid && submitted)}"></i>
                     </span>
@@ -51,7 +51,7 @@
             <div class="field">
                 <label class="label">Telefono celular</label>
                 <div class="control has-icons-right">
-                    <input class="input" type="text" formControlName="cellphone" #cellphone name="cellphone" [ngClass]="{'is-danger' : (add_user_form.controls.cellphone.invalid && submitted)}">
+                    <input class="input" type="text" formControlName="cellphone" #cellphone name="cellphone" [ngClass]="{'is-danger' : (add_user_form.controls.cellphone.invalid && submitted)}" value="{{updateUser?.phoneNumber}}">
                     <span class="icon is-small is-right">
                         <i class="fa fa-close" [ngClass]="{'fa-close' : (add_user_form.controls.cellphone.invalid && submitted)}"></i>
                     </span>
@@ -76,6 +76,8 @@
                 <div class="control" [ngClass]="{'has-icons-left' : (add_user_form.controls.roles.invalid && submitted)}">
                     <div class="select" [ngClass]="{'is-danger' : (add_user_form.controls.roles.invalid && submitted)}">
                         <select formControlName="roles" #roles name="roles">
+
+                          <option value="{{updateUser?.rol}}">{{updateUser.rol | roleformat}}</option>
                           <option *ngFor="let rol of available_roles" value="{{rol}}">{{rol | roleformat}}</option>
                         </select>
                     </div>

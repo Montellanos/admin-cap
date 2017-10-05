@@ -5,3 +5,32 @@
 <p>Update: {{usersService.canUpdate}}</p>
 <p>Read: {{usersService.canRead}}</p>
 <p>Delete : {{usersService.canDelete}}</p>
+
+
+<br> cargando .... <b>{{loading}}</b>
+
+
+<section>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <td>Nombre completo</td>
+                <td>Email</td>
+                <td>Rol</td>
+            </tr>
+        </thead>
+        <tbody *ngFor="let user of users">
+            <tr>
+                <td>{{user.displayName}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.roles | rolenameformat}}</td>
+                <td>
+                    <a [routerLink]="['./edit', user.$key]">Editar</a>
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+</section>

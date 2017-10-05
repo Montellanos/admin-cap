@@ -12,10 +12,14 @@ export class UsersComponent implements OnInit {
   users: any;
   loading = true;
 
-  constructor(private usersService: UsersService, private db: AngularFireDatabase) { }
+  constructor(private usersService: UsersService, private db : AngularFireDatabase) { }
 
   ngOnInit() {
 
+    this.db.list('users').subscribe(res=>{
+      this.users = res;
+      this.loading = false;
+    });
 
 
   }

@@ -12,11 +12,11 @@ export class UsersService {
   private roles = ['admin', 'editor'];
   private userRoles: Array<string>;
 
-  constructor(private auth: AuthService, private db: AngularFireDatabase) {
+
+  constructor(private auth: AuthService, private db: AngularFireDatabase, private authReg : AngularFireAuth) {
 
     auth.user.map(user => {
       this.userRoles = _.keys(_.get(user, 'roles'));
-      console.log(this.userRoles);
       return this.roles;
     }).subscribe();
 
@@ -62,6 +62,22 @@ export class UsersService {
     });
     return control;
   }
+
+
+  addUser(newUser: User) : Observable<any>{
+    return Observable.fromPromise(
+      this.authReg.auth.createUserWithEmailAndPassword(newUser.email,newUser.phoneNumber).then(user=>{
+        this.db.object('users/' + user.uid).update(newUser).then(user=>{
+          return true;
+        }).catch(error=>{
+          return error.message;
+        })
+      }).catch(error=>{
+        return error.message;
+      })
+    );
+  }
+
 
 
 
