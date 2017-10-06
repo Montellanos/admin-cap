@@ -37,6 +37,9 @@
                 <td>
                     <a (click)="toUpUser(user.$key)">Dar de alta</a>
                 </td>
+                <td>
+                    {{user.date.created_at | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm'}}
+                </td>
             </tr>
         </tbody>
     </table>

@@ -25,6 +25,7 @@ import { AdminGuard } from './series/guards/admin.guard';
 import { RolenameformatPipe } from './series/pipes/rolenameformat.pipe';
 
 import { EditUserComponent } from './content/users/edit-user/edit-user.component';
+import { MomentModule } from 'angular2-moment';
 
 const environment = {
   production: false,
@@ -60,7 +61,8 @@ const environment = {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MomentModule
   ],
   providers: [AuthGuard, UsersService, EditorGuard, AuthService, AdminGuard],
   bootstrap: [AppComponent]

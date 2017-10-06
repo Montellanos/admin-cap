@@ -17,8 +17,18 @@ export class UsersComponent implements OnInit {
   constructor(private usersService: UsersService, private db: AngularFireDatabase) { }
 
   ngOnInit() {
-    this.db.list('users').subscribe(res => {
+    this.db.list('users', {
+      query :{
+        limitToLast: 10
+      }
+    }).subscribe(res => {
       this.users = res;
+
+      this.users.sort(function (a, b) {
+        return b.date.displayName - a.date.displayName;
+      });
+
+
       this.loading = false;
     });
   }

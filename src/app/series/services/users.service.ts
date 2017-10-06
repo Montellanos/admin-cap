@@ -101,11 +101,6 @@ export class UsersService {
     }
     return Observable.fromPromise(
       this.db.object('users/'+key).update(data).then(res=>{
-        if (newState) {
-
-        } else {
-
-        }
         return true;
       }).catch(error=>{
         return error.message;
