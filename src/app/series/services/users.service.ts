@@ -13,7 +13,7 @@ export class UsersService {
   private userRoles: Array<string>;
 
 
-  constructor(private auth: AuthService, private db: AngularFireDatabase, private authReg : AngularFireAuth) {
+  constructor(private auth: AuthService, private db: AngularFireDatabase, private authReg: AngularFireAuth) {
 
     auth.user.map(user => {
       this.userRoles = _.keys(_.get(user, 'roles'));
@@ -64,14 +64,60 @@ export class UsersService {
   }
 
 
-  addUser(newUser: User) : Observable<any>{
+  addUser(newUser: User): Observable<any> {
     return Observable.fromPromise(
-      this.authReg.auth.createUserWithEmailAndPassword(newUser.email,newUser.phoneNumber).then(user=>{
-        this.db.object('users/' + user.uid).update(newUser).then(user=>{
+      this.authReg.auth.createUserWithEmailAndPassword(newUser.email, newUser.phoneNumber).then(user => {
+        return this.db.object('users/' + user.uid).update(newUser).then(user => {
           return true;
-        }).catch(error=>{
+        }).catch(error => {
           return error.message;
         })
+      }).catch(error => {
+        return error.message;
+      })
+    );
+  }
+
+  updateUser(key: string, updateUser: User): Observable<any> {
+    updateUser.date.updated_at = (new Date()).getTime();
+    const aux = updateUser.roles;
+    updateUser.roles = {};
+    updateUser.roles[aux] = true;
+    return Observable.fromPromise(
+      this.db.object('users/' + key).update(updateUser).then(res => {
+        return true;
+      }).catch(error => {
+        return error.message;
+      })
+    );
+  }
+
+  toDownUser(key:string, newState : boolean) : Observable<any>{
+    const data = {
+      date : {
+        updated_at : (new Date()).getTime()
+      },
+      state : newState
+    }
+    return Observable.fromPromise(
+      this.db.object('users/'+key).update(data).then(res=>{
+        if (newState) {
+
+        } else {
+
+        }
+        return true;
+      }).catch(error=>{
+        return error.message;
+      })
+    );
+  }
+
+
+  deleteUser(key:string): Observable<any>{
+    return Observable.fromPromise(
+      this.db.object('users/'+key).remove().then(res=>{
+        return true;
       }).catch(error=>{
         return error.message;
       })

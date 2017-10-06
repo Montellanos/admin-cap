@@ -18,23 +18,26 @@ export class EditUserComponent implements OnInit {
   error_message: string;
   available_roles: Array<string>;
   submitted = false;
-  updateUser :User;
+  updUser : User;
+  key : string;
 
   constructor(private formBuild: FormBuilder, private userService: UsersService, private route: ActivatedRoute, private db : AngularFireDatabase) {
-    let key : string;
     route.params.forEach(param=>{
-      key = param['$key']
+      this.key = param['$key']
     });
-    this.db.object('users/'+ key).subscribe(res=>{
-      this.updateUser = res;
+    this.db.object('users/'+ this.key).subscribe(res=>{
+      this.updUser = res;
       this.loading_page = true;
+      this.updUser = new User(this.updUser);
+      this.updUser.roles =Object.keys(this.updUser.roles)[0];
     });
+    this.available_roles = userService.getRoles();
   }
 
   ngOnInit() {
 
     this.update_user_form = this.formBuild.group({
-      name: ['', [
+      displayName: ['', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(60),
@@ -45,7 +48,7 @@ export class EditUserComponent implements OnInit {
         Validators.minLength(2),
         Validators.maxLength(60),
         Validators.pattern(/^[a-záéíóúñA-ZÁÉÍÓÚÑ0-9.!#$%&'*+/=?^_`{|}~-]+@[a-záéíóúñA-ZÁÉÍÓÚÑ0-9-]+(?:\.[a-záéíóúñA-ZÁÉÍÓÚÑ0-9-]+)*$/)]],
-      cellphone: ['', [
+      phoneNumber: ['', [
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(60),
@@ -56,6 +59,21 @@ export class EditUserComponent implements OnInit {
       ]]
     });
 
+  }
+
+  updateUser(isValid: boolean): void{
+    this.submitted = true;
+    if (isValid) {
+      console.log(this.updUser);
+      this.loading = true;
+      this.userService.updateUser(this.key, this.updUser).subscribe(res=>{
+        this.loading = false;
+        console.log(res);
+        if(res !== true){
+          this.error_message = res;
+        }
+      });
+    }
   }
 
 }

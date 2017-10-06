@@ -39,7 +39,7 @@ const routes: Routes = [
   {
     path : 'users/edit/:$key',
     component: EditUserComponent,
-    canActivate : [AuthGuard ]
+    canActivate : [AuthGuard]
   },
   {
     path : '**',

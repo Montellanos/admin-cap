@@ -9,12 +9,11 @@ export class User {
   state: boolean;
 
   constructor(newUser) {
-    this.displayName = newUser.name;
+    this.displayName = newUser.displayName;
     this.email = newUser.email;
-    this.phoneNumber = newUser.cellphone;
+    this.phoneNumber = newUser.phoneNumber;
     this.photoURL = '';
-    this.roles = {}
-    this.roles[newUser.roles] = true;
+    this.roles = newUser.roles;
     this.date = {};
     this.date['created_at'] = (new Date()).getTime();
     this.date['updated_at'] = (new Date()).getTime();

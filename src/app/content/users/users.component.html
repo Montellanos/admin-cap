@@ -28,7 +28,15 @@
                 <td>
                     <a [routerLink]="['./edit', user.$key]">Editar</a>
                 </td>
-                <td></td>
+                <td>
+                    <a (click)="toDownUser(user.$key)">Dar de baja</a>
+                </td>
+                <td>
+                    <a (click)="deleteUser(user.$key)">Borrar</a>
+                </td>
+                <td>
+                    <a (click)="toUpUser(user.$key)">Dar de alta</a>
+                </td>
             </tr>
         </tbody>
     </table>

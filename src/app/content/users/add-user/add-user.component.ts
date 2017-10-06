@@ -22,7 +22,7 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit() {
     this.add_user_form = this.formBuild.group({
-      name: ['', [
+      displayName: ['', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(60),
@@ -33,7 +33,7 @@ export class AddUserComponent implements OnInit {
         Validators.minLength(2),
         Validators.maxLength(60),
         Validators.pattern(/^[a-záéíóúñA-ZÁÉÍÓÚÑ0-9.!#$%&'*+/=?^_`{|}~-]+@[a-záéíóúñA-ZÁÉÍÓÚÑ0-9-]+(?:\.[a-záéíóúñA-ZÁÉÍÓÚÑ0-9-]+)*$/)]],
-      cellphone: ['', [
+      phoneNumber: ['', [
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(60),
@@ -47,16 +47,20 @@ export class AddUserComponent implements OnInit {
 
 
   addUser(newUser: User, isValid: boolean): void{
-
     this.submitted = true;
     if(isValid){
       this.loading = true;
+      const aux = newUser.roles;
+      newUser.roles = {};
+      newUser.roles[aux] = true;
       const us = new User(newUser);
+
       this.userService.addUser(us)
       .subscribe(res=>{
           this.loading= false;
-          if (res !== true) {
-            this.error_message = 'Algo salio mal, re intente';
+          console.log(res);
+          if(res !== true){
+            this.error_message = res;
           }
       });
     }
