@@ -1,3 +1,5 @@
+import { NotificationsComponent } from './content/notifications/notifications.component';
+import { ProfileComponent } from './content/users/profile/profile.component';
 import { EditUserComponent } from './content/users/edit-user/edit-user.component';
 import { AdminGuard } from './series/guards/admin.guard';
 import { EditorGuard } from './series/guards/editor.guard';
@@ -39,6 +41,16 @@ const routes: Routes = [
   {
     path : 'users/edit/:$key',
     component: EditUserComponent,
+    canActivate : [AuthGuard]
+  },
+  {
+    path : 'users/profile/:$key',
+    component : ProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'notifications',
+    component: NotificationsComponent,
     canActivate : [AuthGuard]
   },
   {

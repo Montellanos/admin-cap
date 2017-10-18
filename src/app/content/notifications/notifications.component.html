@@ -1,0 +1,9 @@
+<input type="text" [(ngModel)]="not_title">
+
+<br>
+<input type="text" [(ngModel)]="not_body">
+<br>
+<input type="text" [(ngModel)]="not_topic">
+
+<button type="button" (click)="sendNotification()">Enviar</button> {{this.loading}}
+<br> {{this.message}}

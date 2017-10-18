@@ -1,3 +1,4 @@
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -26,6 +27,9 @@ import { RolenameformatPipe } from './series/pipes/rolenameformat.pipe';
 
 import { EditUserComponent } from './content/users/edit-user/edit-user.component';
 import { MomentModule } from 'angular2-moment';
+import { ProfileComponent } from './content/users/profile/profile.component';
+import { NotificationsComponent } from './content/notifications/notifications.component';
+import { NotificationsService } from './series/services/notifications.service';
 
 const environment = {
   production: false,
@@ -52,7 +56,9 @@ const environment = {
     NotfoundComponent,
     RoleformatPipe,
     RolenameformatPipe,
-    EditUserComponent
+    EditUserComponent,
+    ProfileComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
@@ -62,9 +68,10 @@ const environment = {
     AngularFireAuthModule,
     FormsModule,
     ReactiveFormsModule,
-    MomentModule
+    MomentModule,
+    HttpModule
   ],
-  providers: [AuthGuard, UsersService, EditorGuard, AuthService, AdminGuard],
+  providers: [AuthGuard, UsersService, EditorGuard, AuthService, AdminGuard, NotificationsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

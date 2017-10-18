@@ -15,6 +15,7 @@
     <table border="1">
         <thead>
             <tr>
+                <td>Foto</td>
                 <td>Nombre completo</td>
                 <td>Email</td>
                 <td>Rol</td>
@@ -22,6 +23,9 @@
         </thead>
         <tbody *ngFor="let user of users">
             <tr>
+                <td>
+                    <img src="{{user.photoURL}}" alt="">
+                </td>
                 <td>{{user.displayName}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.roles | rolenameformat}}</td>
@@ -39,6 +43,9 @@
                 </td>
                 <td>
                     {{user.date.created_at | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm'}}
+                </td>
+                <td>
+                    <a [routerLink]="['./profile', user.$key]">Cambiar imagen</a>
                 </td>
             </tr>
         </tbody>

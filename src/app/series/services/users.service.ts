@@ -1,16 +1,20 @@
+
+import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
-import { Observable } from 'rxjs/Rx';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { User } from './../class/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 
+import * as firebase from 'firebase';
+
 @Injectable()
 export class UsersService {
 
   private roles = ['admin', 'editor'];
   private userRoles: Array<string>;
+  private storageRef = firebase.storage().ref();
 
 
   constructor(private auth: AuthService, private db: AngularFireDatabase, private authReg: AngularFireAuth) {
@@ -79,7 +83,6 @@ export class UsersService {
   }
 
   updateUser(key: string, updateUser: User): Observable<any> {
-    updateUser.date.updated_at = (new Date()).getTime();
     const aux = updateUser.roles;
     updateUser.roles = {};
     updateUser.roles[aux] = true;
@@ -92,31 +95,44 @@ export class UsersService {
     );
   }
 
-  toDownUser(key:string, newState : boolean) : Observable<any>{
+  toDownUser(key: string, newState: boolean): Observable<any> {
     const data = {
-      date : {
-        updated_at : (new Date()).getTime()
+      date: {
+        updated_at: (new Date()).getTime()
       },
-      state : newState
+      state: newState
     }
     return Observable.fromPromise(
-      this.db.object('users/'+key).update(data).then(res=>{
+      this.db.object('users/' + key).update(data).then(res => {
         return true;
-      }).catch(error=>{
+      }).catch(error => {
         return error.message;
       })
     );
   }
 
 
-  deleteUser(key:string): Observable<any>{
+  deleteUser(key: string): Observable<any> {
     return Observable.fromPromise(
-      this.db.object('users/'+key).remove().then(res=>{
+      this.db.object('users/' + key).remove().then(res => {
         return true;
-      }).catch(error=>{
+      }).catch(error => {
         return error.message;
       })
     );
+  }
+
+
+  updateUserPhoto(key: string, photo: any): Observable<any> {
+      const iRef = this.storageRef.child('img/users/' + key + (photo[0].name.substring(photo[0].name.lastIndexOf('.'))));
+      return Observable.fromPromise(
+      iRef.put(photo[0]).then((snapshot) => {
+          return this.db.object('users/' + key).update({ 'photoURL': snapshot.downloadURL }).then(res=>{
+            return true;
+          }).catch(error=>{
+            return error.message;
+          })
+      }));
   }
 
 

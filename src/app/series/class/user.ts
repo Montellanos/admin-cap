@@ -5,8 +5,8 @@ export class User {
   phoneNumber: string;
   photoURL: string;
   roles: any;
-  date: any;
-  state: boolean;
+  date : any;
+  state : boolean;
 
   constructor(newUser) {
     this.displayName = newUser.displayName;
@@ -14,10 +14,6 @@ export class User {
     this.phoneNumber = newUser.phoneNumber;
     this.photoURL = '';
     this.roles = newUser.roles;
-    this.date = {};
-    this.date['created_at'] = (new Date()).getTime();
-    this.date['updated_at'] = (new Date()).getTime();
-    this.state = true;
   }
 
 
